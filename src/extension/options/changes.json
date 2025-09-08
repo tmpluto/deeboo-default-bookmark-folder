@@ -1,0 +1,10 @@
+[
+	{
+		"version": "1.0.0",
+		"changes": [
+			"save your bookmarks in your pinned default folder automatically",
+			"option to save bookmarks with your custom note + keeping original page title",
+			"faster way to create new folders"
+		]
+	}
+]
