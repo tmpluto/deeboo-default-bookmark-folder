@@ -14,6 +14,8 @@
 
 - [ ] confirm on bookmark deletion???
 
+- [ ] maybe add "add to last used folder" feature ??? if you want it to behave as chrome bookmarking sometimes.
+
 - [ ] rewrite in rust
 
 
