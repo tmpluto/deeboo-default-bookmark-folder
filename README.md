@@ -1,7 +1,10 @@
 # deeboo · Default Bookmark Folder
 
-- [ ] soon in chrome store
+<a href="https://chromewebstore.google.com/detail/deeboo-%C2%B7-default-bookmark/fgfgmbjogdhiinldmkpfmhgnaibpcaon" target="_blank">
+  <img src="https://developer.chrome.com/static/docs/webstore/branding/image/UV4C4ybeBTsZt43U4xis.png" alt="Available in the Chrome Web Store">
+</a>
 
+<br/>
 <br/>
 
 ![](images/screenshot_1.png)
