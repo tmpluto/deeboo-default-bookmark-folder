@@ -25,6 +25,7 @@ function App() {
 	const [selectedFolderId, setSelectedFolderId] = useState<string>(MyConstants.otherbookmarksId);
 	const [bookmarkNote, setBookmarkNote] = useState<string>("");
 	const { defaultFolderId, defaultTitleSaveMode, setDefaultFolderId } = useDeeBooStore();
+	const hasHydrated = useDeeBooStore(state => state._hasHydrated);
 	const [bookmarkLifeStatus, setBookmarkLifeStatus] = useState<BookmarkLifeStatus>("added-now");
 	const inputRef = useRef<HTMLInputElement>(null);
 
@@ -34,6 +35,7 @@ function App() {
 	const [refToTab, setRefToTab] = useState<chrome.tabs.Tab | null>(null);
 
 	useEffect(() => {
+		if (!hasHydrated) return;
 		(async () => {
 			const list = await getFlatFolderList();
 			setFlatFolderList(list);
@@ -85,7 +87,7 @@ function App() {
 				inputRef.current!.select();
 			}, 50);
 		})();
-	}, []);
+	}, [hasHydrated]);
 
 	useEffect(() => {
 		// cmd+D should be able to close the extension.

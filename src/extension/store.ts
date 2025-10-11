@@ -10,6 +10,8 @@ interface Store {
 	defaultTitleSaveMode: BookmarkTitleSaveMode;
 	setDefaultFolderId: (id: string | null) => void;
 	setDefaultTitleSaveMode: (val: BookmarkTitleSaveMode) => void;
+	_hasHydrated: boolean;
+	setHasHydrated: (hydrationState: boolean) => void;
 }
 
 export const useDeeBooStore = create(
@@ -23,10 +25,19 @@ export const useDeeBooStore = create(
 			setDefaultTitleSaveMode(val: BookmarkTitleSaveMode) {
 				set(() => ({ defaultTitleSaveMode: val }));
 			},
+			_hasHydrated: false,
+			setHasHydrated: (hydrationState) => {
+				set({
+				_hasHydrated: hydrationState
+				});
+			}
 		}),
 		{
 			name: MyConstants.storeKey,
 			storage: createJSONStorage(() => ChromeLocalStorage),
+			onRehydrateStorage: (state) => {
+				return () => state.setHasHydrated(true)
+			}
 		}
 	)
 );
