@@ -56,14 +56,23 @@ export const bookmarkUtils = {
 		return updatedBookmarks[0];
 	},
 
-	async createBookmarkOfCurrentTab(parentFolderId: string): Promise<chrome.bookmarks.BookmarkTreeNode> {
+	async createBookmarkOfCurrentTab(
+		parentFolderId: string,
+		shouldAddToTop: boolean
+	): Promise<chrome.bookmarks.BookmarkTreeNode> {
 		const tab = await this.getCurrentTab();
 
-		const bookmark = await chrome.bookmarks.create({
+		const bookmarkDetails: chrome.bookmarks.CreateDetails = {
 			parentId: parentFolderId,
 			title: tab.title,
 			url: tab.url,
-		});
+		};
+
+		if (shouldAddToTop) {
+			bookmarkDetails.index = 0;
+		}
+
+		const bookmark = await chrome.bookmarks.create(bookmarkDetails);
 
 		return bookmark;
 	},

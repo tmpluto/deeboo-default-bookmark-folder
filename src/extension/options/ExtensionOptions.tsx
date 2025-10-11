@@ -2,15 +2,17 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { useDeeBooStore, type BookmarkTitleSaveMode } from "../store";
 import { cn } from "@/lib/utils";
+import { Switch } from "@/components/ui/switch";
 
 export function ExtensionOptions() {
-	const { defaultTitleSaveMode, setDefaultTitleSaveMode } = useDeeBooStore();
+	const { defaultTitleSaveMode, setDefaultTitleSaveMode, shouldAddToTop, setShouldAddToTop } =
+		useDeeBooStore();
 
 	return (
 		<div className="flex justify-center">
 			<div className="max-w-[900px] pt-4">
 				<div className="flex flex-col gap-4">
-					<fieldset className="flex flex-col gap-3">
+					<fieldset className="flex flex-col gap-3 px-4">
 						<legend className="font-medium">default bookmark title save mode</legend>
 						<p className="text-muted-foreground text-sm">
 							the titles of your new bookmarks will be saved according to this setting. existing
@@ -63,6 +65,19 @@ export function ExtensionOptions() {
 								</div>
 							</Label>
 						</RadioGroup>
+					</fieldset>
+					<hr />
+					<fieldset className="flex items-center gap-6 px-4">
+						<div className="flex flex-col">
+							<legend className="font-medium">
+								add new bookmarks to the top of its folder
+							</legend>
+							<p className="text-muted-foreground text-sm">
+								by default, chrome saves new bookmarks to the bottom of its folder as the last
+								element. if you turn this on, they will be added to the top of folder instead.
+							</p>
+						</div>
+						<Switch checked={shouldAddToTop} onCheckedChange={setShouldAddToTop} />
 					</fieldset>
 					<hr />
 				</div>

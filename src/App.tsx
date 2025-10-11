@@ -24,8 +24,8 @@ function App() {
 	const [flatFolderList, setFlatFolderList] = useState<FlatFolderType[]>([]);
 	const [selectedFolderId, setSelectedFolderId] = useState<string>(MyConstants.otherbookmarksId);
 	const [bookmarkNote, setBookmarkNote] = useState<string>("");
-	const { defaultFolderId, defaultTitleSaveMode, setDefaultFolderId } = useDeeBooStore();
-	const hasHydrated = useDeeBooStore(state => state._hasHydrated);
+	const { defaultFolderId, defaultTitleSaveMode, shouldAddToTop, setDefaultFolderId } = useDeeBooStore();
+	const hasHydrated = useDeeBooStore((state) => state._hasHydrated);
 	const [bookmarkLifeStatus, setBookmarkLifeStatus] = useState<BookmarkLifeStatus>("added-now");
 	const inputRef = useRef<HTMLInputElement>(null);
 
@@ -71,7 +71,7 @@ function App() {
 				}
 				setSelectedFolderId(folderId);
 				// autosaving the page as bookmark as soon as popup opens. title save mode doesn't matter. it quickly saves the page with its title first. then you can do ur edits.
-				const createdBm = await bookmarkUtils.createBookmarkOfCurrentTab(folderId);
+				const createdBm = await bookmarkUtils.createBookmarkOfCurrentTab(folderId, shouldAddToTop);
 				setRefToBookmark(createdBm);
 
 				// if new bookmark, use default title saving mode

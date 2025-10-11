@@ -8,6 +8,8 @@ export type BookmarkTitleSaveMode = "just-custom" | "custom-and-original";
 interface Store {
 	defaultFolderId: string | null;
 	defaultTitleSaveMode: BookmarkTitleSaveMode;
+	shouldAddToTop: boolean;
+	setShouldAddToTop: (val: boolean) => void;
 	setDefaultFolderId: (id: string | null) => void;
 	setDefaultTitleSaveMode: (val: BookmarkTitleSaveMode) => void;
 	_hasHydrated: boolean;
@@ -19,25 +21,29 @@ export const useDeeBooStore = create(
 		(set) => ({
 			defaultFolderId: null,
 			defaultTitleSaveMode: "just-custom",
+			shouldAddToTop: false,
 			setDefaultFolderId(id: string | null) {
 				set(() => ({ defaultFolderId: id }));
 			},
 			setDefaultTitleSaveMode(val: BookmarkTitleSaveMode) {
 				set(() => ({ defaultTitleSaveMode: val }));
 			},
+			setShouldAddToTop(val: boolean) {
+				set(() => ({ shouldAddToTop: val }));
+			},
 			_hasHydrated: false,
 			setHasHydrated: (hydrationState) => {
 				set({
-				_hasHydrated: hydrationState
+					_hasHydrated: hydrationState,
 				});
-			}
+			},
 		}),
 		{
 			name: MyConstants.storeKey,
 			storage: createJSONStorage(() => ChromeLocalStorage),
 			onRehydrateStorage: (state) => {
-				return () => state.setHasHydrated(true)
-			}
+				return () => state.setHasHydrated(true);
+			},
 		}
 	)
 );
