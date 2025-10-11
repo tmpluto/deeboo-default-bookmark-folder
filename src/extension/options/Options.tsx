@@ -119,6 +119,9 @@ function Changelog() {
 							</li>
 						))}
 					</ul>
+					{index < changes.length - 1 && (
+						<div className={cn("text-success/40 my-1", index === 0 && "text-success")}>·</div>
+					)}
 				</div>
 			))}
 		</div>
