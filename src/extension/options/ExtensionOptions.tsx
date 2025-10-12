@@ -18,6 +18,8 @@ export function ExtensionOptions() {
 							the titles of your new bookmarks will be saved according to this setting. existing
 							bookmarks will keep their saving mode as is, but you can change it when editing
 							the bookmark.
+							<br />
+							(you can also double-press either Ctrl, Cmd, or Alt key to quickly switch title save mode for a bookmark)
 						</p>
 						<RadioGroup
 							value={defaultTitleSaveMode}

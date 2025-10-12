@@ -103,7 +103,7 @@ function Changelog() {
 		<div className="bg-success/10 flex flex-1 flex-col items-center gap-4 pt-28">
 			{[...changes].reverse().map((change, index) => (
 				<div key={change.version} className="text-center">
-					<p className={cn("excalifont text-success/40 text-2xl", index === 0 && "text-success")}>
+					<p className={cn("excalifont text-success/70 text-2xl", index === 0 && "text-success")}>
 						{change.version}
 					</p>
 					<ul>
@@ -111,7 +111,7 @@ function Changelog() {
 							<li
 								key={i}
 								className={cn(
-									"excalifont text-success/40 text-center text-lg",
+									"excalifont text-success/70 text-center text-lg",
 									index === 0 && "text-success"
 								)}
 							>
@@ -120,7 +120,7 @@ function Changelog() {
 						))}
 					</ul>
 					{index < changes.length - 1 && (
-						<div className={cn("text-success/40 my-1", index === 0 && "text-success")}>·</div>
+						<div className={cn("text-success/70 my-2", index === 0 && "text-success")}>·</div>
 					)}
 				</div>
 			))}

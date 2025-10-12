@@ -13,5 +13,11 @@
 			"🎉 new feature: option to save new bookmarks to the top of folder",
 			"🔧 bug fix: saved options were not being used in rare cases"
 		]
+	},
+	{
+		"version": "1.2.0",
+		"changes": [
+			"🎹 keyboard shortcut  -> double-press either Ctrl, Cmd, or Alt key to quickly switch title save mode for a bookmark"
+		]
 	}
 ]
