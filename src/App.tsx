@@ -8,6 +8,7 @@ import { useDeeBooStore, type BookmarkTitleSaveMode } from "./extension/store";
 import { AddNewFolder } from "./extension/AddNewFolder";
 import { SetOrUnsetAsDefaultFolder } from "./extension/SetOrUnsetAsDefaultFolder";
 import { DeeBoo } from "./extension/DeeBoo";
+import { useDoubleKeyPress } from "./hooks/use-double-key-press";
 import {
 	Select,
 	SelectContent,
@@ -88,6 +89,18 @@ function App() {
 			}, 50);
 		})();
 	}, [hasHydrated]);
+
+	// detect double Ctrl, Cmd, or Alt press to toggle currentTitleSaveMode
+	useDoubleKeyPress({
+		keys: ["control", "meta", "alt"],
+		onDoublePress: async () => {
+			if (currentTitleSaveMode === "just-custom") {
+				await handleModeChange("custom-and-original");
+			} else {
+				await handleModeChange("just-custom");
+			}
+		},
+	});
 
 	useEffect(() => {
 		// cmd+D should be able to close the extension.
