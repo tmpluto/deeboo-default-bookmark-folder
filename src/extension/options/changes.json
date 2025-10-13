@@ -19,5 +19,11 @@
 		"changes": [
 			"🎹 keyboard shortcut  -> double-press either Ctrl, Cmd, or Alt key to quickly switch title save mode for a bookmark"
 		]
+	},
+	{
+		"version": "1.2.1",
+		"changes": [
+			"🔧 bug fix: moving bookmark to another folder should respect your 'add to the top of folder' choice"
+		]
 	}
 ]
