@@ -76,7 +76,7 @@ export function ExtensionOptions() {
 							</legend>
 							<p className="text-muted-foreground text-sm">
 								by default, chrome saves new bookmarks to the bottom of its folder as the last
-								element. if you turn this on, they will be added to the top of folder instead.
+								element. if you turn this on, they will be added to the top of folder instead both when you create a new bookmark and when you change location of an existing one.
 							</p>
 						</div>
 						<Switch checked={shouldAddToTop} onCheckedChange={setShouldAddToTop} />

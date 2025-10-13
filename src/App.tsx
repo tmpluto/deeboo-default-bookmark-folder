@@ -138,7 +138,7 @@ function App() {
 
 	async function handleFolderChange(id: string) {
 		setSelectedFolderId(id);
-		const newRef = await bookmarkUtils.changeBookmarkLocation(id);
+		const newRef = await bookmarkUtils.changeBookmarkLocation(id, shouldAddToTop);
 		setRefToBookmark(newRef);
 	}
 

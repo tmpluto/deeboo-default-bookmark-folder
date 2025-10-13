@@ -38,11 +38,19 @@ export const bookmarkUtils = {
 		return newFolder.id;
 	},
 
-	async changeBookmarkLocation(newFolderId: string): Promise<chrome.bookmarks.BookmarkTreeNode> {
+	async changeBookmarkLocation(
+		newFolderId: string,
+		shouldAddToTop: boolean
+	): Promise<chrome.bookmarks.BookmarkTreeNode> {
 		const bookmarksForCurrentTab = await this.getBookmarksOfCurrentTab();
 
 		const updatedBookmarks = await Promise.all(
-			bookmarksForCurrentTab.map((b) => chrome.bookmarks.move(b.id, { parentId: newFolderId }))
+			bookmarksForCurrentTab.map((b) =>
+				chrome.bookmarks.move(b.id, {
+					parentId: newFolderId,
+					index: shouldAddToTop ? 0 : undefined,
+				})
+			)
 		);
 		return updatedBookmarks[0];
 	},
