@@ -1,12 +1,21 @@
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-import { useDeeBooStore, type BookmarkTitleSaveMode } from "../store";
+import { useDeeBooStore } from "../store";
 import { cn } from "@/lib/utils";
 import { Switch } from "@/components/ui/switch";
+import { QuickAccessFoldersManager } from "./QuickAccessFoldersManager";
+import { useEffect } from "react";
+import { getFlatFolderList } from "../functions";
 
 export function ExtensionOptions() {
-	const { defaultTitleSaveMode, setDefaultTitleSaveMode, shouldAddToTop, setShouldAddToTop } =
-		useDeeBooStore();
+	const {
+		defaultTitleSaveMode,
+		setDefaultTitleSaveMode,
+		shouldAddToTop,
+		setShouldAddToTop,
+		isQuickAccessEnabled,
+		setIsQuickAccessEnabled,
+	} = useDeeBooStore();
 
 	return (
 		<div className="flex justify-center">
@@ -19,7 +28,8 @@ export function ExtensionOptions() {
 							bookmarks will keep their saving mode as is, but you can change it when editing
 							the bookmark.
 							<br />
-							(you can also double-press either Ctrl, Cmd, or Alt key to quickly switch title save mode for a bookmark)
+							(you can also double-press either Ctrl, Cmd, or Alt key to quickly switch title
+							save mode for a bookmark)
 						</p>
 						<RadioGroup
 							value={defaultTitleSaveMode}
@@ -76,10 +86,31 @@ export function ExtensionOptions() {
 							</legend>
 							<p className="text-muted-foreground text-sm">
 								by default, chrome saves new bookmarks to the bottom of its folder as the last
-								element. if you turn this on, they will be added to the top of folder instead both when you create a new bookmark and when you change location of an existing one.
+								element. if you turn this on, they will be added to the top of folder instead
+								both when you create a new bookmark and when you change location of an
+								existing one.
 							</p>
 						</div>
 						<Switch checked={shouldAddToTop} onCheckedChange={setShouldAddToTop} />
+					</fieldset>
+					<hr />
+					<fieldset className="flex flex-col gap-4 px-4">
+						<div className="flex items-center justify-between gap-4">
+							<div className="flex flex-col">
+								<legend className="font-medium">quick access folders</legend>
+								<p className="text-muted-foreground text-sm">
+									if you have tons of folders, set frequently used folders as quick access
+									folders. they will appear in the popup for quick bookmark location
+									switching.
+									{/* if your default folder is not in quick access folder list, it will be still shown on top of quick access folders list. */}
+								</p>
+							</div>
+							<Switch
+								checked={isQuickAccessEnabled}
+								onCheckedChange={setIsQuickAccessEnabled}
+							/>
+						</div>
+						<QuickAccessFoldersManager />
 					</fieldset>
 					<hr />
 				</div>

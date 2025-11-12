@@ -18,6 +18,9 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Check, Pin } from "lucide-react";
+import { cn } from "./lib/utils";
 
 type BookmarkLifeStatus = "added-now" | "existing";
 
@@ -25,7 +28,15 @@ function App() {
 	const [flatFolderList, setFlatFolderList] = useState<FlatFolderType[]>([]);
 	const [selectedFolderId, setSelectedFolderId] = useState<string>(MyConstants.otherbookmarksId);
 	const [bookmarkNote, setBookmarkNote] = useState<string>("");
-	const { defaultFolderId, defaultTitleSaveMode, shouldAddToTop, setDefaultFolderId } = useDeeBooStore();
+	const {
+		defaultFolderId,
+		defaultTitleSaveMode,
+		shouldAddToTop,
+		setDefaultFolderId,
+		quickAccessFolderIds,
+		setQuickAccessFolderIds,
+		isQuickAccessEnabled,
+	} = useDeeBooStore();
 	const hasHydrated = useDeeBooStore((state) => state._hasHydrated);
 	const [bookmarkLifeStatus, setBookmarkLifeStatus] = useState<BookmarkLifeStatus>("added-now");
 	const inputRef = useRef<HTMLInputElement>(null);
@@ -40,6 +51,14 @@ function App() {
 		(async () => {
 			const list = await getFlatFolderList();
 			setFlatFolderList(list);
+
+			// validate quick access folder ids
+			const validQuickAccessIds = quickAccessFolderIds.filter((id) =>
+				list.some((folder) => folder.id === id)
+			);
+			if (validQuickAccessIds.length !== quickAccessFolderIds.length) {
+				setQuickAccessFolderIds(validQuickAccessIds);
+			}
 
 			const { currentTab, bookmarksOfCurrentTab } = await bookmarkUtils.getCurrentTabAndItsBookmarks();
 			setRefToTab(currentTab);
@@ -88,6 +107,7 @@ function App() {
 				inputRef.current!.select();
 			}, 50);
 		})();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [hasHydrated]);
 
 	// detect double Ctrl, Cmd, or Alt press to toggle currentTitleSaveMode
@@ -287,7 +307,65 @@ function App() {
 						</div>
 					</div> */}
 
-					<div className="mt-4 flex justify-end gap-4">
+					{isQuickAccessEnabled && (quickAccessFolderIds.length > 0 || defaultFolderId) && (
+						<Accordion type="single" collapsible className="w-full">
+							<AccordionItem value="quick-access" className="border-none">
+								<AccordionTrigger className="bg-input/30 data-[state=open]:text-muted-foreground ml-14 h-8 items-center border px-2 py-0 text-sm font-normal hover:no-underline data-[state=open]:rounded-b-none data-[state=open]:bg-transparent [&>svg]:translate-y-0">
+									quick access folders
+								</AccordionTrigger>
+								<AccordionContent className="ml-14 flex flex-col rounded-b-md border border-t-0 pb-0 [&>button:not(:last-child)]:border-b">
+									{[
+										// ...(defaultFolderId ? [defaultFolderId] : []),
+										// ...quickAccessFolderIds.filter((id) => id !== defaultFolderId),
+										// ...(defaultFolderId && !quickAccessFolderIds.includes(defaultFolderId)
+										// 	? [defaultFolderId]
+										// 	: []),
+										...quickAccessFolderIds,
+									]
+										.map((id) => flatFolderList.find((f) => f.id === id))
+										.filter((f): f is FlatFolderType => f !== undefined)
+										// [
+										// 	{id: '1', title: 'folder 1'},
+										// 	{id: '2', title: 'folder 2'},
+										// 	{id: '3', title: 'folder 3'},
+										// ]
+										.map((folder) => (
+											<button
+												key={folder.id}
+												className={cn(
+													"hover:bg-accent/90 focus-visible:border-ring focus-visible:ring-ring/50 flex h-8 items-center justify-between px-2 text-sm outline-none select-none focus-visible:ring-[3px]",
+													selectedFolderId === folder.id && "bg-accent/50",
+													folder.id === defaultFolderId && "text-primary"
+												)}
+												onClick={() => {
+													handleFolderChange(folder.id);
+												}}
+											>
+												<div className="flex items-center gap-1">
+													{folder.id === defaultFolderId && (
+														<Pin
+															className={cn(
+																"size-4",
+																selectedFolderId === folder.id &&
+																	"fill-primary"
+															)}
+														/>
+													)}
+													{folder.title.trim() === ""
+														? "⚠️ untitled folder"
+														: `${folder.title.slice(0, 20)}${folder.title.length > 20 ? "..." : ""}`}
+												</div>
+												{selectedFolderId === folder.id && (
+													<Check className="size-4" />
+												)}
+											</button>
+										))}
+								</AccordionContent>
+							</AccordionItem>
+						</Accordion>
+					)}
+
+					<div className="mt-4 mb-[25px] flex justify-end gap-4">
 						<Button
 							variant="outline"
 							className="text-destructive border-destructive! hover:bg-destructive/60! hover:text-destructive-foreground focus-visible:ring-destructive/40 focus-visible:bg-destructive/60! focus-visible:text-destructive-foreground w-24"

@@ -40,7 +40,7 @@ export function Options() {
 				body { font-size: 100%; }
 				html, body, #root { height: 100%; }
 			`}</style>
-			<div className="bg-success/10 flex h-25 items-center">
+			<div className="bg-success/10 flex h-25 min-h-25 items-center">
 				<div className="relative left-14 mr-36 flex scale-200 items-center">
 					<a
 						className="size-12 focus-visible:outline-none"

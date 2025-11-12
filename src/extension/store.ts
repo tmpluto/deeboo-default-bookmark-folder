@@ -9,9 +9,13 @@ interface Store {
 	defaultFolderId: string | null;
 	defaultTitleSaveMode: BookmarkTitleSaveMode;
 	shouldAddToTop: boolean;
+	quickAccessFolderIds: string[];
+	isQuickAccessEnabled: boolean;
 	setShouldAddToTop: (val: boolean) => void;
 	setDefaultFolderId: (id: string | null) => void;
 	setDefaultTitleSaveMode: (val: BookmarkTitleSaveMode) => void;
+	setQuickAccessFolderIds: (ids: string[]) => void;
+	setIsQuickAccessEnabled: (val: boolean) => void;
 	_hasHydrated: boolean;
 	setHasHydrated: (hydrationState: boolean) => void;
 }
@@ -22,6 +26,8 @@ export const useDeeBooStore = create(
 			defaultFolderId: null,
 			defaultTitleSaveMode: "just-custom",
 			shouldAddToTop: false,
+			quickAccessFolderIds: [],
+			isQuickAccessEnabled: false,
 			setDefaultFolderId(id: string | null) {
 				set(() => ({ defaultFolderId: id }));
 			},
@@ -30,6 +36,12 @@ export const useDeeBooStore = create(
 			},
 			setShouldAddToTop(val: boolean) {
 				set(() => ({ shouldAddToTop: val }));
+			},
+			setQuickAccessFolderIds(ids: string[]) {
+				set(() => ({ quickAccessFolderIds: ids }));
+			},
+			setIsQuickAccessEnabled(val: boolean) {
+				set(() => ({ isQuickAccessEnabled: val }));
 			},
 			_hasHydrated: false,
 			setHasHydrated: (hydrationState) => {
