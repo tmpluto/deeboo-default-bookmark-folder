@@ -25,5 +25,11 @@
 		"changes": [
 			"🔧 bug fix: moving bookmark to another folder should respect your 'add to the top of folder' choice"
 		]
+	},
+	{
+		"version": "1.3.0",
+		"changes": [
+			"🎉 new feature: save your most used folders to 'quick access folders' list from options page for faster bookmark location changing"
+		]
 	}
 ]
