@@ -27,7 +27,7 @@ export const useDeeBooStore = create(
 			defaultTitleSaveMode: "just-custom",
 			shouldAddToTop: false,
 			quickAccessFolderIds: [],
-			isQuickAccessEnabled: false,
+			isQuickAccessEnabled: true,
 			setDefaultFolderId(id: string | null) {
 				set(() => ({ defaultFolderId: id }));
 			},

@@ -6,6 +6,7 @@ import { Switch } from "@/components/ui/switch";
 import { QuickAccessFoldersManager } from "./QuickAccessFoldersManager";
 import { useEffect } from "react";
 import { getFlatFolderList } from "../functions";
+import { Kbd } from "@/components/ui/kbd";
 
 export function ExtensionOptions() {
 	const {
@@ -28,8 +29,10 @@ export function ExtensionOptions() {
 							bookmarks will keep their saving mode as is, but you can change it when editing
 							the bookmark.
 							<br />
-							(you can also double-press either Ctrl, Cmd, or Alt key to quickly switch title
-							save mode for a bookmark)
+							<span className="font-bold">
+								you can also double-press either <Kbd>Ctrl</Kbd>, <Kbd>Cmd</Kbd>, or{" "}
+								<Kbd>Alt</Kbd> key to quickly switch title save mode for a bookmark.
+							</span>
 						</p>
 						<RadioGroup
 							value={defaultTitleSaveMode}

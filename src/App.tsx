@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { NativeFolderSelect } from "./extension/NativeFolderSelect";
 import GithubCorner from "react-github-corner";
@@ -19,7 +19,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Check, Pin } from "lucide-react";
+import { Ban, Check, ExternalLink, Pin } from "lucide-react";
 import { cn } from "./lib/utils";
 
 type BookmarkLifeStatus = "added-now" | "existing";
@@ -203,6 +203,22 @@ function App() {
 		}, 50);
 	}
 
+	const quickAccessFolderList = [
+		// ...(defaultFolderId ? [defaultFolderId] : []),
+		// ...quickAccessFolderIds.filter((id) => id !== defaultFolderId),
+		// ...(defaultFolderId && !quickAccessFolderIds.includes(defaultFolderId)
+		// 	? [defaultFolderId]
+		// 	: []),
+		...quickAccessFolderIds,
+	]
+		.map((id) => flatFolderList.find((f) => f.id === id))
+		.filter((f): f is FlatFolderType => f !== undefined);
+	// const quickAccessFolderList = [
+	// 	{ id: "1", title: "folder 1" },
+	// 	{ id: "2", title: "folder 2" },
+	// 	{ id: "3", title: "folder 3" },
+	// ];
+
 	return (
 		<div className="EXTENSION_WRAPPER relative h-[245px] w-[470px] p-4">
 			{/* <GithubCorner
@@ -307,59 +323,60 @@ function App() {
 						</div>
 					</div> */}
 
-					{isQuickAccessEnabled && (quickAccessFolderIds.length > 0 || defaultFolderId) && (
+					{isQuickAccessEnabled && (
 						<Accordion type="single" collapsible className="w-full">
 							<AccordionItem value="quick-access" className="border-none">
 								<AccordionTrigger className="bg-input/30 data-[state=open]:text-muted-foreground ml-14 h-8 items-center border px-2 py-0 text-sm font-normal hover:no-underline data-[state=open]:rounded-b-none data-[state=open]:bg-transparent [&>svg]:translate-y-0">
 									quick access folders
 								</AccordionTrigger>
 								<AccordionContent className="ml-14 flex flex-col rounded-b-md border border-t-0 pb-0 [&>button:not(:last-child)]:border-b">
-									{[
-										// ...(defaultFolderId ? [defaultFolderId] : []),
-										// ...quickAccessFolderIds.filter((id) => id !== defaultFolderId),
-										// ...(defaultFolderId && !quickAccessFolderIds.includes(defaultFolderId)
-										// 	? [defaultFolderId]
-										// 	: []),
-										...quickAccessFolderIds,
-									]
-										.map((id) => flatFolderList.find((f) => f.id === id))
-										.filter((f): f is FlatFolderType => f !== undefined)
-										// [
-										// 	{id: '1', title: 'folder 1'},
-										// 	{id: '2', title: 'folder 2'},
-										// 	{id: '3', title: 'folder 3'},
-										// ]
-										.map((folder) => (
-											<button
-												key={folder.id}
-												className={cn(
-													"hover:bg-accent/90 focus-visible:border-ring focus-visible:ring-ring/50 flex h-8 items-center justify-between px-2 text-sm outline-none select-none focus-visible:ring-[3px]",
-													selectedFolderId === folder.id && "bg-accent/50",
-													folder.id === defaultFolderId && "text-primary"
+									{quickAccessFolderList.map((folder) => (
+										<button
+											key={folder.id}
+											className={cn(
+												"hover:bg-accent/90 focus-visible:border-ring focus-visible:ring-ring/50 flex h-8 items-center justify-between px-2 text-sm outline-none select-none focus-visible:ring-[3px]",
+												selectedFolderId === folder.id && "bg-accent/50",
+												folder.id === defaultFolderId && "text-primary"
+											)}
+											onClick={() => {
+												handleFolderChange(folder.id);
+											}}
+										>
+											<div className="flex items-center gap-1">
+												{folder.id === defaultFolderId && (
+													<Pin
+														className={cn(
+															"size-4",
+															selectedFolderId === folder.id && "fill-primary"
+														)}
+													/>
 												)}
-												onClick={() => {
-													handleFolderChange(folder.id);
+												{folder.title.trim() === ""
+													? "⚠️ untitled folder"
+													: `${folder.title.slice(0, 20)}${folder.title.length > 20 ? "..." : ""}`}
+											</div>
+											{selectedFolderId === folder.id && <Check className="size-4" />}
+										</button>
+									))}
+									{quickAccessFolderList.length === 0 && (
+										<div className="text-muted-foreground flex flex-col items-center justify-center gap-2 p-2">
+											<div className="flex items-center gap-2">
+												<Ban className="size-4" /> no folder
+											</div>
+											<a
+												className={cn(
+													buttonVariants({ variant: "link", size: "sm" }),
+													"text-foreground hover:cursor-pointer"
+												)}
+												onClick={(e) => {
+													e.preventDefault();
+													chrome.runtime.openOptionsPage();
 												}}
 											>
-												<div className="flex items-center gap-1">
-													{folder.id === defaultFolderId && (
-														<Pin
-															className={cn(
-																"size-4",
-																selectedFolderId === folder.id &&
-																	"fill-primary"
-															)}
-														/>
-													)}
-													{folder.title.trim() === ""
-														? "⚠️ untitled folder"
-														: `${folder.title.slice(0, 20)}${folder.title.length > 20 ? "..." : ""}`}
-												</div>
-												{selectedFolderId === folder.id && (
-													<Check className="size-4" />
-												)}
-											</button>
-										))}
+												set quick access folders <ExternalLink className="size-4" />
+											</a>
+										</div>
+									)}
 								</AccordionContent>
 							</AccordionItem>
 						</Accordion>
