@@ -58,8 +58,8 @@ function SortableFolderItem({
 			>
 				<GripVertical className="size-4" />
 			</button>
-			{folderId === defaultFolderId && <Pin className="text-primary size-4" />}
-			<span className={cn("flex-1 truncate text-sm", folderId === defaultFolderId && "text-primary")}>
+			{folderId === defaultFolderId && <Pin className="text-foreground fill-foreground size-4" />}
+			<span className="flex-1 truncate text-sm">
 				{folderTitle.trim() === "" ? "⚠️ untitled folder" : folderTitle}
 			</span>
 			<Button variant="ghost" size="sm" className="h-6 w-6 p-0" onClick={() => onRemove(folderId)}>

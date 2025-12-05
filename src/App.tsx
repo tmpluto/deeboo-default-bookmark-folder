@@ -19,6 +19,8 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
 import { Ban, Check, ExternalLink, Pin } from "lucide-react";
 import { cn } from "./lib/utils";
 
@@ -329,35 +331,56 @@ function App() {
 								<AccordionTrigger className="bg-input/30 data-[state=open]:text-muted-foreground ml-14 h-8 items-center border px-2 py-0 text-sm font-normal hover:no-underline data-[state=open]:rounded-b-none data-[state=open]:bg-transparent [&>svg]:translate-y-0">
 									quick access folders
 								</AccordionTrigger>
-								<AccordionContent className="ml-14 flex flex-col rounded-b-md border border-t-0 pb-0 [&>button:not(:last-child)]:border-b">
-									{quickAccessFolderList.map((folder) => (
-										<button
-											key={folder.id}
-											className={cn(
-												"hover:bg-accent/90 focus-visible:border-ring focus-visible:ring-ring/50 flex h-8 items-center justify-between px-2 text-sm outline-none select-none focus-visible:ring-[3px]",
-												selectedFolderId === folder.id && "bg-accent/50",
-												folder.id === defaultFolderId && "text-primary"
-											)}
-											onClick={() => {
-												handleFolderChange(folder.id);
-											}}
+								<AccordionContent className="ml-14 flex flex-col rounded-b-md border border-t-0 pb-0">
+									{quickAccessFolderList.length > 0 && (
+										<RadioGroup
+											value={selectedFolderId}
+											onValueChange={handleFolderChange}
+											className="gap-0 [&>label:not(:last-child)]:border-b"
 										>
-											<div className="flex items-center gap-1">
-												{folder.id === defaultFolderId && (
-													<Pin
+											{quickAccessFolderList.map((folder) => (
+												<Label
+													key={folder.id}
+													htmlFor={`radio-${folder.id}`}
+													className={cn(
+														"flex h-8 cursor-pointer items-center gap-3 p-2 text-sm",
+														selectedFolderId === folder.id && "bg-accent/50"
+													)}
+												>
+													<RadioGroupItem
+														value={folder.id}
+														id={`radio-${folder.id}`}
 														className={cn(
-															"size-4",
-															selectedFolderId === folder.id && "fill-primary"
+															"data-[state=checked]:border-foreground text-foreground data-[state=checked]:[&_svg]:fill-foreground focus-visible:ring-foreground/50",
+															folder.id === defaultFolderId &&
+																"data-[state=checked]:border-primary text-primary data-[state=checked]:[&_svg]:fill-primary focus-visible:ring-ring/50"
 														)}
 													/>
-												)}
-												{folder.title.trim() === ""
-													? "⚠️ untitled folder"
-													: `${folder.title.slice(0, 20)}${folder.title.length > 20 ? "..." : ""}`}
-											</div>
-											{selectedFolderId === folder.id && <Check className="size-4" />}
-										</button>
-									))}
+													<div
+														className={cn(
+															"flex items-center gap-1",
+															folder.id === defaultFolderId &&
+																folder.id === selectedFolderId &&
+																"text-primary"
+														)}
+													>
+														{folder.id === defaultFolderId && (
+															<Pin
+																className={cn(
+																	"fill-foreground size-4",
+																	folder.id === selectedFolderId &&
+																		"fill-primary"
+																)}
+															/>
+														)}
+														{folder.title.trim() === ""
+															? "⚠️ untitled folder"
+															: `${folder.title.slice(0, 50)}${folder.title.length > 50 ? "..." : ""}`}
+													</div>
+												</Label>
+											))}
+										</RadioGroup>
+									)}
 									{quickAccessFolderList.length === 0 && (
 										<div className="text-muted-foreground flex flex-col items-center justify-center gap-2 p-2">
 											<div className="flex items-center gap-2">
