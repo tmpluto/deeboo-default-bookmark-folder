@@ -100,7 +100,7 @@ function Welcome() {
 
 function Changelog() {
 	return (
-		<div className="bg-success/10 flex flex-1 flex-col items-center gap-4 pt-28">
+		<div className="bg-success/10 changelog-scrollable flex flex-1 flex-col items-center gap-4 overflow-y-auto pt-28">
 			{[...changes].reverse().map((change, index) => (
 				<div key={change.version} className="text-center">
 					<p className={cn("excalifont text-success/70 text-2xl", index === 0 && "text-success")}>
@@ -124,6 +124,7 @@ function Changelog() {
 					)}
 				</div>
 			))}
+			<div className="min-h-32"></div>
 		</div>
 	);
 }

@@ -227,3 +227,25 @@
 .excalifont {
 	font-family: "Excalifont", system-ui;
 }
+
+.changelog-scrollable {
+	scrollbar-width: thin;
+	scrollbar-color: hsl(145 50% 50% / 0.4) transparent;
+
+	&::-webkit-scrollbar {
+		width: 8px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background: transparent;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background: hsl(145 50% 50% / 0.4);
+		border-radius: 4px;
+	}
+
+	&::-webkit-scrollbar-thumb:hover {
+		background: hsl(145 50% 50% / 0.6);
+	}
+}
