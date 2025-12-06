@@ -1,6 +1,6 @@
 # deeboo · Default Bookmark Folder
 
-<a href="https://chromewebstore.google.com/detail/deeboo-%C2%B7-default-bookmark/fgfgmbjogdhiinldmkpfmhgnaibpcaon" target="_blank">
+<a href="https://chromewebstore.google.com/detail/deeboo-%C2%B7-default-bookmark/fgfgmbjogdhiinldmkpfmhgnaibpcaon?utm_source=github" target="_blank">
   <img src="https://developer.chrome.com/static/docs/webstore/branding/image/UV4C4ybeBTsZt43U4xis.png" alt="Available in the Chrome Web Store">
 </a>
 
