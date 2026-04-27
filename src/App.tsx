@@ -328,7 +328,7 @@ function App() {
 					{isQuickAccessEnabled && (
 						<Accordion type="single" collapsible className="w-full">
 							<AccordionItem value="quick-access" className="border-none">
-								<AccordionTrigger className="bg-input/30 data-[state=open]:text-muted-foreground ml-14 h-8 items-center border px-2 py-0 text-sm font-normal hover:no-underline data-[state=open]:rounded-b-none data-[state=open]:bg-transparent [&>svg]:translate-y-0">
+								<AccordionTrigger className="bg-input/30 text-muted-foreground ml-14 h-8 items-center border px-2 py-0 text-sm font-normal hover:no-underline data-[state=open]:rounded-b-none data-[state=open]:bg-transparent [&>svg]:translate-y-0">
 									quick access folders
 								</AccordionTrigger>
 								<AccordionContent className="ml-14 flex flex-col rounded-b-md border border-t-0 pb-0">
@@ -361,7 +361,8 @@ function App() {
 															"flex items-center gap-1",
 															folder.id === defaultFolderId &&
 																folder.id === selectedFolderId &&
-																"text-primary"
+																"text-primary",
+															folder.id !== selectedFolderId && "text-muted-foreground"
 														)}
 													>
 														{folder.id === defaultFolderId && (

@@ -90,7 +90,7 @@ function Welcome() {
 			<p className="excalifont text-success text-2xl">🙂</p>
 			<p className="excalifont text-success text-2xl">thanks for downloading</p>
 			<Button asChild variant="link" className="excalifont text-success text-lg underline">
-				<a href="https://github.com/tmpluto/deeboo-default-bookmark-folder" target="_blank">
+				<a href="https://github.com/tmpluto/deeboo-default-bookmark-folder/issues" target="_blank">
 					for issues/feature requests {"->"} click here
 				</a>
 			</Button>
