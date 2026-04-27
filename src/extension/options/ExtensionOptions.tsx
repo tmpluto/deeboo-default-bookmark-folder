@@ -30,8 +30,8 @@ export function ExtensionOptions() {
 							the bookmark.
 							<br />
 							<span className="font-bold">
-								you can also double-press either <Kbd>Ctrl</Kbd>, <Kbd>Cmd</Kbd>, or{" "}
-								<Kbd>Alt</Kbd> key to quickly switch title save mode for a bookmark.
+								you can also double-press either <Kbd>Ctrl</Kbd>, <Kbd>Alt</Kbd>, <Kbd>Opt</Kbd>, <Kbd>Cmd</Kbd>, or{" "}
+								<Kbd>Shift</Kbd> key to quickly switch title save mode for a bookmark.
 							</span>
 						</p>
 						<RadioGroup

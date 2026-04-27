@@ -114,7 +114,7 @@ function App() {
 
 	// detect double Ctrl, Cmd, or Alt press to toggle currentTitleSaveMode
 	useDoubleKeyPress({
-		keys: ["control", "meta", "alt"],
+		keys: ["control", "meta", "alt", "shift"],
 		onDoublePress: async () => {
 			if (currentTitleSaveMode === "just-custom") {
 				await handleModeChange("custom-and-original");
