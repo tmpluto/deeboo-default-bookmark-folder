@@ -46,5 +46,9 @@
 			"💄 style changes little bit",
 			"🎹 keyboard shortcut  -> now double-press Shift key also supports quickly switching title save mode for a bookmark"
 		]
+	},
+	{
+		"version": "1.3.4",
+		"changes": ["🔧 quick bug fix"]
 	}
 ]

@@ -1,11 +1,11 @@
 {
 	"name": "default-bookmark-folder",
 	"private": true,
-	"version": "1.3.3",
+	"version": "1.3.4",
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
-		"build": "tsc -b && vite build",
+		"build": "NODE_ENV=production tsc -b && NODE_ENV=production vite build",
 		"lint": "eslint .",
 		"preview": "vite preview",
 		"prettify": "npx prettier --write ."
